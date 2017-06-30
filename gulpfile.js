@@ -3,12 +3,12 @@ const source = require('vinyl-source-stream');
 const uglify = require('gulp-uglify');
 const browserify = require('browserify');
 const utilities = require('gulp-util');
-const jshint = require('jshint');
+const jshint = require('gulp-jshint');
 const concat = require('gulp-concat')
 const browserSync = require('browser-sync').create();
 const del = require('del');
 const sass = require('gulp-sass');
-const sourcemaps = require('gulp-sourecemaps');
+const sourcemaps = require('gulp-sourcemaps');
 const lib = require('bower-files')({
   "overrides":{
     "bootstrap" : {
@@ -30,7 +30,7 @@ gulp.task('concatInterface', () => {
 });
 
 gulp.task('browserify', ['concatInterface'], () => {
-  return browserify({entries: ['.tmp/allConcat.js']})
+  return browserify({entries: ['./tmp/allConcat.js']})
     .bundle()
     .pipe(source('app.js'))
     .pipe(gulp.dest('./build/js'));
@@ -99,7 +99,7 @@ gulp.task('cssBuild', () => {
 gulp.task('jshint', () => {
   return gulp.src(['js/*.js'])
   .pipe(jshint())
-  .pipe(jsint.reporter('default'));
+  .pipe(jshint.reporter('default'));
 });
 
 gulp.task('clean', () => del(['build', 'tmp']));
