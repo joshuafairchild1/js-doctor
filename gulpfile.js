@@ -1,4 +1,5 @@
 const gulp = require('gulp');
+const babel = require('gulp-babel');
 const source = require('vinyl-source-stream');
 const uglify = require('gulp-uglify');
 const browserify = require('browserify');
@@ -38,7 +39,10 @@ gulp.task('browserify', ['concatInterface'], () => {
 
 gulp.task('minifyScripts', ['browserify'], () => {
   return gulp.src('./build/js/app.js')
-    .pipe(uglify())
+    .pipe(babel({
+      presets: ['es2015']
+    }))
+    .pipe(uglify().on('error', error => console.log(error)))
     .pipe(gulp.dest('./build/js'));
 });
 

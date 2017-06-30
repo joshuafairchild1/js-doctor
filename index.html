@@ -9,18 +9,22 @@
     <title>Doctor Lookup</title>
   </head>
   <body>
-    <h1 class="text-center jumbotron">Doctor Lookup</h1>
+    <h1 class="text-center jumbotron">&#9764; Doctor Lookup &#9764;</h1>
     <div class="container">
-      <form id='ailment-form'>
+      <form id='ailment-form' class="well">
         <div class="form-group">
           <label>Enter the medical condition/ailment that you are seeking a doctor for:</label>
-          <input type="text" id="ailment-input" class='form-control'>
+          <div class="input-group">
+            <input type="text" id="ailment-input" class='form-control'>
+            <span class="input-group-btn">
+              <button type="submit" class="btn btn-info">Search &#128269;</button>
+            </span>
+          </div>
         </div>
-        <button type="submit" class="btn">Search</button>
       </form>
-      <ul id='doctors'>
+      <div id="doctors">
 
-      </ul>
+      </div>
     </div>
   </body>
 </html>
