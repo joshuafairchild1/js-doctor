@@ -41,11 +41,11 @@ This application allows the user to enter a medical issue that they are having, 
 
 ## Technologies Used
 
-* JavaScript
+* JavaScript + jQuery
 * [BetterDoctor API](https://developer.betterdoctor.com/)
 * Node/npm
 * Gulp
-* Sass
+* Sass + Bootstrap
 * Bower
 
 ## Known Bugs
