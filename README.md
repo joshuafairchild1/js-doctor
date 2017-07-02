@@ -4,7 +4,7 @@
 
 ## Description
 
-This application allows the user to enter a medical issue that they are having, as well as their location, and they will be given a list of doctors in their area who would be able to treat them. The Google Maps API is used to convert the user's address into a more manageable form, then the BetterDoctor API uses their location and illness to return a list of local physicians who would be able to treat them.
+This application allows the user to enter a medical issue that they are having, as well as their location, and they will be given a list of doctors in their area who would be able to treat them. Both the Google Maps API and the BetterDoctor API are used to gather the results and display information to the user about their search. Google Maps API is used to convert the user's address/zipcode into longitude and latitude, which can then be used (along with the user's ailment) to query the BetterDoctor API for a list of doctors. The user is then displayed a Google Map, with markers dropped on the addresses of all of the doctors found by the BetterDoctor API. The markers can then be clicked to see information about each doctor from within the Google Map.
 
 ## Installation Requirements
 
