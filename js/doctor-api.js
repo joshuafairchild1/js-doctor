@@ -7,7 +7,7 @@ class DoctorFinder {
       zoom: 4,
       center: {
         lat: 45.52,
-        lng: 122.6
+        lng: -122.6
       }
     });
   }
@@ -27,6 +27,7 @@ class DoctorFinder {
           const doctors = response.data;
           doctors.forEach(doctor => {
             const location = doctor.practices[0].visit_address;
+            const latLng = {lat: doctor.practices[0].lat, lng: doctor.practices[0].lon};
             const edu = doctor.educations[0] || {school: 'no data available'};//to handle the occasion of doctor.educations having a length of 0
             const doctorName = `${doctor.profile.first_name} ${doctor.profile.last_name}, ${doctor.profile.title}`;
             const address = `${location.street}, ${location.city} ${location.state} ${location.zip}`;
@@ -35,12 +36,7 @@ class DoctorFinder {
             const bio = doctor.profile.bio;
             const newDoctor = new Doctor(doctorName, address, url, almaMater, bio);
             displayFn(newDoctor);
-
-            this.geoCodeAddress(address)
-              .catch(error => console.log(error))
-              .then(response => {
-                this.addMarker(response);
-              });
+            this.addMarker(latLng);
           });
         });
       });
@@ -56,12 +52,9 @@ class DoctorFinder {
     });
   }
 
-  addMarker(geoCodePromise) {
-    const lat = geoCodePromise[0].geometry.location.lat();
-    const lng = geoCodePromise[0].geometry.location.lng();
-    console.log(`Lat: ${lat}`);
-    console.log(`Lng: ${lng}`);
-
+  addMarker(latLngObj) {
+    const lat = latLngObj.lat;
+    const lng = latLngObj.lng;
     const marker = new google.maps.Marker({
       position: {lat: lat, lng: lng},
       map: this.map
