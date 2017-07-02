@@ -13,15 +13,14 @@ const displayDoctor = doctor => {
                         </div>`);
 };
 
-
 $(() => {
   const doctorFinder = new DoctorFinder();
 
   $("#ailment-form").submit(ev => {
     ev.preventDefault();
     const ailment = $("#ailment-input").val();
+    const userZip = $("#zip-input").val();
     $("#doctors").empty();
-    $(this).trigger('reset');
-    doctorFinder.ailmentSearch(ailment, displayDoctor, displayError);
+    doctorFinder.ailmentSearch(ailment, userZip, displayDoctor, displayError);
   });
 });

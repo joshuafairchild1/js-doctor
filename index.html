@@ -6,6 +6,7 @@
     <script src='build/js/app.js'></script>
     <link rel="stylesheet" href="build/css/vendor.css">
     <link rel="stylesheet" href="build/css/main.css">
+    <script src="http://maps.google.com/maps/api/js?key=AIzaSyDgAlsbBzFH4oMB6MEZWC2h0MObQt1UQ6I"></script>
     <title>Doctor Lookup</title>
   </head>
   <body>
@@ -14,8 +15,12 @@
       <form id='ailment-form' class="well">
         <div class="form-group">
           <label>Enter the medical condition/ailment that you are seeking a doctor for:</label>
+          <input type="text" id="ailment-input" class='form-control' required>
+        </div>
+        <div class="form-group">
+          <label>What is your address/zip code? (This is for finding doctors in your area)</label>
           <div class="input-group">
-            <input type="text" id="ailment-input" class='form-control'>
+            <input type="text" class='form-control' id='zip-input' required>
             <span class="input-group-btn">
               <button type="submit" class="btn btn-info">Search &#128269;</button>
             </span>
