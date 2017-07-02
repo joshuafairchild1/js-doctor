@@ -2,6 +2,16 @@ const apiKey = require('./../.env').apiKey;
 const Doctor = require('./../js/doctor.js').doctorModule;
 
 class DoctorFinder {
+  constructor() {
+    this.map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 4,
+      center: {
+        lat: 45.52,
+        lng: 122.6
+      }
+    });
+  }
+
   ailmentSearch(ailment, zip, displayFn, displayErr) {
     this.geoCodeAddress(zip)
       .catch(error => console.log(error))
@@ -15,7 +25,6 @@ class DoctorFinder {
           response.data.length || displayErr();
 
           const doctors = response.data;
-
           doctors.forEach(doctor => {
             const location = doctor.practices[0].visit_address;
             const edu = doctor.educations[0] || {school: 'no data available'};//to handle the occasion of doctor.educations having a length of 0
@@ -24,9 +33,14 @@ class DoctorFinder {
             const url = doctor.profile.image_url;
             const almaMater = edu.school;
             const bio = doctor.profile.bio;
-
             const newDoctor = new Doctor(doctorName, address, url, almaMater, bio);
             displayFn(newDoctor);
+
+            this.geoCodeAddress(address)
+              .catch(error => console.log(error))
+              .then(response => {
+                this.addMarker(response);
+              });
           });
         });
       });
@@ -39,6 +53,18 @@ class DoctorFinder {
       geocoder.geocode({'address': zip}, (results, status) => {
         status == 'OK' ? resolve(results) : reject(status);
       });
+    });
+  }
+
+  addMarker(geoCodePromise) {
+    const lat = geoCodePromise[0].geometry.location.lat();
+    const lng = geoCodePromise[0].geometry.location.lng();
+    console.log(`Lat: ${lat}`);
+    console.log(`Lng: ${lng}`);
+
+    const marker = new google.maps.Marker({
+      position: {lat: lat, lng: lng},
+      map: this.map
     });
   }
 }

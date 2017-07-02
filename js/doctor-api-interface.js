@@ -14,12 +14,12 @@ const displayDoctor = doctor => {
 };
 
 $(() => {
-  const doctorFinder = new DoctorFinder();
-
   $("#ailment-form").submit(ev => {
     ev.preventDefault();
+    const doctorFinder = new DoctorFinder();
     const ailment = $("#ailment-input").val();
     const userZip = $("#zip-input").val();
+    $("#map").addClass('display-map');
     $("#doctors").empty();
     doctorFinder.ailmentSearch(ailment, userZip, displayDoctor, displayError);
   });
