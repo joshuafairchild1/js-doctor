@@ -20,15 +20,15 @@ class DoctorFinder {
           doctors.forEach(doctor => {
             const location = doctor.practices[0].visit_address;
             const latLng = {lat: doctor.practices[0].lat, lng: doctor.practices[0].lon};
-            const edu = doctor.educations[0] || {school: 'no data available'};//to handle the occasion of doctor.educations having a length of 0
             const doctorName = `${doctor.profile.first_name} ${doctor.profile.last_name}, ${doctor.profile.title}`;
             const address = `${location.street}, ${location.city} ${location.state} ${location.zip}`;
             const url = doctor.profile.image_url;
-            const almaMater = edu.school;
+            const school = doctor.educations[0]&&doctor.educations[0].school || 'no data available'; //to handle the occasion of doctor.educations having a length of 0
             const bio = doctor.profile.bio;
-            const newDoctor = new Doctor(doctorName, address, url, almaMater, bio);
+
+            const newDoctor = new Doctor(doctorName, address, url, school, bio);
             displayFn(newDoctor);
-            googMaps.addMarker(latLng);
+            googMaps.addMarker(latLng, newDoctor);
           });
         });
       });
