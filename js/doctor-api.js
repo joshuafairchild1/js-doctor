@@ -1,19 +1,11 @@
 const apiKey = require('./../.env').apiKey;
 const Doctor = require('./../js/doctor.js').doctorModule;
+const MapApi = require('./../js/map-api.js').mapApiModule;
 
 class DoctorFinder {
-  constructor() {
-    this.map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 4,
-      center: {
-        lat: 45.52,
-        lng: -122.6
-      }
-    });
-  }
-
   ailmentSearch(ailment, zip, displayFn, displayErr) {
-    this.geoCodeAddress(zip)
+    const googMaps = new MapApi();
+    googMaps.geoCodeAddress(zip)
       .catch(error => console.log(error))
       .then(response => {
         const lat = response[0].geometry.location.lat();
@@ -36,29 +28,10 @@ class DoctorFinder {
             const bio = doctor.profile.bio;
             const newDoctor = new Doctor(doctorName, address, url, almaMater, bio);
             displayFn(newDoctor);
-            this.addMarker(latLng);
+            googMaps.addMarker(latLng);
           });
         });
       });
-  }
-
-  //this method returns a promise, allowing .then() to be called so that the resulting Lng/Lat can be accessed. (the point of this to allow the geocoding process to be a reusable standalone method)
-  geoCodeAddress(zip) {
-    const geocoder = new google.maps.Geocoder();
-    return new Promise((resolve,reject) => {
-      geocoder.geocode({'address': zip}, (results, status) => {
-        status == 'OK' ? resolve(results) : reject(status);
-      });
-    });
-  }
-
-  addMarker(latLngObj) {
-    const lat = latLngObj.lat;
-    const lng = latLngObj.lng;
-    const marker = new google.maps.Marker({
-      position: {lat: lat, lng: lng},
-      map: this.map
-    });
   }
 }
 
