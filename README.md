@@ -4,7 +4,7 @@
 
 ## Description
 
-This application allows the user to enter a medical issue that they are having, and they will be given a list of doctors in the Portland area who would be able to treat them.
+This application allows the user to enter a medical issue that they are having, as well as their location, and they will be given a list of doctors in their area who would be able to treat them. The Google Maps API is used to convert the user's address into a more manageable form, then the BetterDoctor API uses their location and illness to return a list of local physicians who would be able to treat them.
 
 ## Installation Requirements
 
@@ -43,6 +43,7 @@ This application allows the user to enter a medical issue that they are having, 
 
 * JavaScript + jQuery
 * [BetterDoctor API](https://developer.betterdoctor.com/)
+* [Google Maps API](https://developers.google.com/maps/)
 * Node/npm
 * Gulp
 * Sass + Bootstrap

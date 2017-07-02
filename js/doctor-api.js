@@ -36,7 +36,7 @@ class DoctorFinder {
   geoCodeAddress(zip) {
     const geocoder = new google.maps.Geocoder();
     return new Promise((resolve,reject) => {
-      geocoder.geocode( { 'address': zip}, function(results, status) {
+      geocoder.geocode({'address': zip}, (results, status) => {
         status == 'OK' ? resolve(results) : reject(status);
       });
     });
