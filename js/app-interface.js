@@ -3,6 +3,7 @@ const DoctorFinder = require('./../js/doctor-api.js').doctorFinderModule;
 const displayError = () => $("#doctors").append('<h3 class="text-center">Your search yielded zero results.</h3>');
 
 const displayDoctor = doctor => {
+  $("#map").addClass('display-map');
   $("#doctors").append(`<div class="doctor well">
                           <h3>${doctor.name} at ${doctor.address}</h3>
                           <div class='img text-center'>
@@ -14,12 +15,11 @@ const displayDoctor = doctor => {
 };
 
 $(() => {
-  $("#ailment-form").submit(ev => {
-    ev.preventDefault();
+  $("#ailment-form").submit(event => {
+    event.preventDefault();
     const doctorFinder = new DoctorFinder();
     const ailment = $("#ailment-input").val();
     const userZip = $("#zip-input").val();
-    $("#map").addClass('display-map');
     $("#doctors").empty();
     doctorFinder.ailmentSearch(ailment, userZip, displayDoctor, displayError);
   });

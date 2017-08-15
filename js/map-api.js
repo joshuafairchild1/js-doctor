@@ -9,7 +9,6 @@ class MapApi {
     });
   }
 
-  //this method returns a promise, allowing .then() to be called so that the resulting Lng/Lat can be accessed. (the point of this to allow the geocoding process to be a reusable standalone method)
   geoCodeAddress(zip) {
     const geocoder = new google.maps.Geocoder();
     return new Promise((resolve,reject) => {
@@ -20,8 +19,7 @@ class MapApi {
   }
 
   addMarker(latLngObj, doctor) {
-    const lat = latLngObj.lat;
-    const lng = latLngObj.lng;
+    const {lat, lng} = latLngObj;
     const marker = new google.maps.Marker({
       position: {lat: lat, lng: lng},
       map: this.map
@@ -31,7 +29,7 @@ class MapApi {
   }
 
   addInfoWindow(doctor, mapMarker) {
-    const contentString = `<div class="doctor well">
+    const content = `<div class="doctor well">
                             <h3>${doctor.name} at ${doctor.address}</h3>
                             <div class='img text-center'>
                             <img class='doctor-img' src="${doctor.imgUrl}">
@@ -40,13 +38,9 @@ class MapApi {
                             <p>Bio: ${doctor.bio}<p>
                           </div>`;
 
-    const infowindow = new google.maps.InfoWindow({
-      content: contentString
-    });
+    const infowindow = new google.maps.InfoWindow({content});
 
-    mapMarker.addListener('click', function() {
-      infowindow.open(this.map, mapMarker);
-    });
+    mapMarker.addListener('click', () => infowindow.open(this.map, mapMarker));
   }
 }
 
